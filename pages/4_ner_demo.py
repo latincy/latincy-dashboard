@@ -12,12 +12,9 @@ st.title("Latin Named Entity Recognition")
 st.markdown(
     """
 This demo highlights **named entities** in Latin text — people, places,
-and groups — using LatinCy's NER component.
+groups, events, works, and dates — using LatinCy's NER component.
 
-**Entity types:**
-- **PER** — People (*Cicero, Caesar*)
-- **LOC** — Locations (*Roma, Gallia*)
-- **NORP** — Nationalities / groups (*Belgae, Aquitani*)
+**Entity types:** PERSON, NORP, GPE, LOC, EVENT, WORK, DATE
 """
 )
 
@@ -53,27 +50,63 @@ with tab2:
     st.markdown("""
     ## About
 
-    LatinCy's NER component identifies **named entities** in Latin text.
+    **Named Entity Recognition (NER)** is the task of identifying and
+    classifying named entities — such as people, places, and events — in
+    unstructured text. LatinCy's NER component locates spans of tokens that
+    refer to real-world entities and assigns each span a category label.
 
     ### Entity Types
 
     | Label | Description | Examples |
     |-------|-------------|----------|
-    | **PER** | Person names | *Cicero*, *Caesar*, *Medea* |
-    | **LOC** | Locations | *Roma*, *Gallia*, *Corinthus* |
-    | **NORP** | Nationalities, groups, peoples | *Belgae*, *Aquitani*, *Romani* |
+    | **PERSON** | Named individuals | *Cicero*, *Caesar*, *Medea* |
+    | **NORP** | Nationalities, religious/political groups | *Belgae*, *Aquitani*, *Romani* |
+    | **GPE** | Geo-political entities (cities, provinces, states) | *Roma*, *Carthago*, *Athenae* |
+    | **LOC** | Non-GPE locations (rivers, mountains, regions) | *Rhenus*, *Alpes*, *Gallia* |
+    | **EVENT** | Named battles, wars, festivals | *Pharsalia*, *Saturnalia* |
+    | **WORK** | Titles of literary or artistic works | *Aeneis*, *Metamorphoses* |
+    | **DATE** | Temporal expressions | *Idibus Martiis*, *anno consulatus* |
 
     ### Training Data
 
-    The NER model was trained on manually annotated Latin texts spanning
-    multiple genres: historical prose, poetry, biblical text, and
-    philosophical works. Sources include the Vulgate (Matthew), Ovid's
-    Metamorphoses, and Augustine's *De Civitate Dei*.
+    The NER model was trained on manually annotated Latin texts from
+    multiple sources:
 
-    ### Performance (v3.8.0, lg model)
+    - **Tesserae texts** — a broad corpus of classical Latin prose and poetry
+    - **DCD annotations** — annotations derived from Augustine's
+      *De Civitate Dei*
+    - **Biblical texts** — annotated passages from the Vulgate
 
-    - **Overall NER F1:** 85.0%
-    - Best on PER and LOC; NORP is harder due to ambiguity with adjectives
+    These sources span historical prose, poetry, philosophical works, and
+    biblical text, giving the model exposure to diverse entity contexts.
+
+    ### Model Performance
+
+    NER F1 scores by pipeline size:
+
+    | Pipeline | NER F1 |
+    |----------|--------|
+    | **la_core_web_sm** | 80.4% |
+    | **la_core_web_md** | 82.2% |
+    | **la_core_web_lg** | 82.6% |
+    | **la_core_web_trf** | 84.8% |
+
+    Larger pipelines benefit from richer word vectors (md, lg) or a
+    transformer encoder (trf), which improve the model's ability to
+    disambiguate entities from common nouns and adjectives.
+
+    ### Interpreting Entity Annotations
+
+    Entities are shown as highlighted spans in the text. Each span is
+    labeled with its entity type. A few tips for interpretation:
+
+    - **Overlapping categories:** A word like *Romani* could be NORP
+      (the Roman people) or GPE (the Roman state), depending on context.
+      The model picks the most likely label, but ambiguous cases exist.
+    - **Boundary errors:** The model may occasionally include or exclude
+      a word at the edge of a multi-token entity. Check the full span.
+    - **Unknown entities:** Rare names not seen in training may be missed.
+      Larger models generally have better recall on uncommon entities.
 
     ### Source
 
