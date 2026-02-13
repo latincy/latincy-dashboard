@@ -146,27 +146,64 @@ with tab2:
     st.markdown("""
     ## About
 
-    This demo produces a **CoNLL-U style** tabular analysis of Latin text,
-    showing the full linguistic annotation for each token.
+    This demo produces a **Universal Dependencies (UD)** style tabular
+    analysis of Latin text, showing the full linguistic annotation that
+    LatinCy predicts for each token.
+
+    ### What Is UD Parsing?
+
+    [Universal Dependencies](https://universaldependencies.org/) is a
+    framework for consistent grammatical annotation across languages.
+    A UD parse assigns every token its part of speech, morphological
+    features, and a labeled syntactic dependency linking it to its
+    grammatical head. The result is a complete, machine-readable
+    description of sentence structure.
 
     ### Output Columns
 
-    | Column | Description |
-    |--------|-------------|
-    | **sent_id** | Sentence identifier |
-    | **token_id** | Position within sentence |
-    | **form** | Surface form (as written) |
-    | **lemma** | Dictionary headword |
-    | **upos** | Universal POS tag (NOUN, VERB, ADJ, etc.) |
-    | **xpos** | Language-specific POS tag |
-    | **feats** | Morphological features (Case, Number, Tense, etc.) |
-    | **head** | Index of syntactic head (0 = root) |
-    | **deprel** | Dependency relation (nsubj, obj, obl, etc.) |
-    | **ent_type** | Named entity type (PER, LOC, NORP) |
+    The table follows the standard
+    [CoNLL-U format](https://universaldependencies.org/format.html):
+
+    | Column | CoNLL-U Field | Description |
+    |--------|---------------|-------------|
+    | **sent_id** | — | Sentence identifier (added by this demo) |
+    | **token_id** | ID | Position of the token within its sentence (1-indexed) |
+    | **form** | FORM | The surface form exactly as it appears in the text |
+    | **lemma** | LEMMA | Dictionary headword (*e.g.* *tempus* for *tempora*) |
+    | **upos** | UPOS | Universal part-of-speech tag (NOUN, VERB, ADJ, ADV, etc.) |
+    | **xpos** | XPOS | Language-specific POS tag from the Latin tagset |
+    | **feats** | FEATS | Morphological features: Case, Number, Gender, Tense, Mood, Voice, etc. |
+    | **head** | HEAD | Index of the syntactic head token (0 = sentence root) |
+    | **deprel** | DEPREL | Dependency relation to head (*nsubj*, *obj*, *obl*, *advmod*, *amod*, etc.) |
+    | **ent_type** | — | Named entity type, if any (PER, LOC, NORP) |
+
+    ### Model Details
+
+    - **Model:** `la_core_web_lg` — LatinCy v3.8.0
+    - **Training data:** Harmonized annotations from 6 UD Latin treebanks
+      (Perseus, PROIEL, ITTB, LLCT, UDante, CIRCSE)
+    - **Framework:** [spaCy](https://spacy.io/) v3
+
+    ### Accuracy (v3.8.0, lg model)
+
+    | Component | Score |
+    |-----------|-------|
+    | **POS (UPOS)** | 97.5% |
+    | **Morphology** | 94.1% |
+    | **Dependency UAS** | 89.1% |
+    | **Dependency LAS** | 85.0% |
+    | **Sentence segmentation** | 99.7% F1 |
+
+    Scores are macro-averaged across the six treebank test sets.
 
     ### Notes
 
     - Output is limited to 500 tokens
     - TSV export follows [CoNLL-U format](https://universaldependencies.org/format.html)
-    - Powered by [LatinCy](https://github.com/diyclassics/latincy)
+
+    ### References
+
+    - [Universal Dependencies](https://universaldependencies.org/) — annotation guidelines and treebank data
+    - [UD Latin treebanks](https://universaldependencies.org/la/index.html) — all Latin UD resources
+    - [GitHub: diyclassics/latincy](https://github.com/diyclassics/latincy) — LatinCy source and documentation
     """)
