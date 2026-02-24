@@ -1,7 +1,7 @@
 import streamlit as st
 from typing import Dict, Any
 
-from latincy_uv import UVNormalizerRules, NormalizationResult
+from latincy_preprocess.uv import UVNormalizerRules, NormalizationResult
 
 st.set_page_config(page_title="U/V Normalizer Demo", layout="wide")
 st.sidebar.header("U/V Normalizer Demo")
@@ -134,7 +134,7 @@ normalizer = get_normalizer()
 st.title("Latin U/V Normalizer")
 st.markdown(
     "Rule-based U/V normalization for Latin using "
-    "[latincy-uv](https://github.com/diyclassics/latincy-uv). "
+    "[latincy-preprocess](https://pypi.org/project/latincy-preprocess/). "
     "Converts consonantal 'u' to 'v' and vocalic 'v' to 'u'."
 )
 
@@ -261,5 +261,5 @@ with tab3:
 
     ### Source
 
-    [GitHub: diyclassics/latincy-uv](https://github.com/diyclassics/latincy-uv)
+    [PyPI: latincy-preprocess](https://pypi.org/project/latincy-preprocess/)
     """)

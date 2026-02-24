@@ -1,6 +1,6 @@
 import streamlit as st
 
-from latincy_long_s import LongSNormalizer
+from latincy_preprocess.long_s import LongSNormalizer
 
 st.set_page_config(page_title="Long-S Normalizer Demo", layout="wide")
 st.sidebar.header("Long-S Normalizer Demo")
@@ -35,7 +35,7 @@ normalizer = get_normalizer()
 st.title("Latin Long-S Normalizer")
 st.markdown(
     "Correct OCR artifacts from historical Latin texts where long-s (ſ) was misread as 'f', "
-    "using [latincy-long-s](https://github.com/diyclassics/latincy-long-s)."
+    "using [latincy-preprocess](https://pypi.org/project/latincy-preprocess/)."
 )
 
 tab1, tab2 = st.tabs(["Normalize", "About"])
@@ -164,5 +164,5 @@ with tab2:
 
     ### Source
 
-    [GitHub: diyclassics/latincy-long-s](https://github.com/diyclassics/latincy-long-s)
+    [PyPI: latincy-preprocess](https://pypi.org/project/latincy-preprocess/)
     """)
