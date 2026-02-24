@@ -32,14 +32,18 @@ def colorize_changes(original: str, restored: str, reference: str = None) -> str
     parts = []
 
     for i, (orig, rest) in enumerate(zip(original, restored)):
-        if orig != rest:
-            if reference and i < len(reference):
-                if rest == reference[i]:
+        if reference and i < len(reference):
+            # Evaluate mode: compare against reference
+            if rest == reference[i]:
+                if orig != rest:
                     parts.append(f"{HTML_GREEN}{rest}{HTML_END}")
                 else:
-                    parts.append(f"{HTML_RED}{rest}{HTML_END}")
+                    parts.append(f"{HTML_GREY}{rest}{HTML_END}")
             else:
-                parts.append(f"{HTML_GREEN}{rest}{HTML_END}")
+                # Wrong — either changed to wrong char, or failed to change
+                parts.append(f"{HTML_RED}{rest}{HTML_END}")
+        elif orig != rest:
+            parts.append(f"{HTML_GREEN}{rest}{HTML_END}")
         else:
             parts.append(f"{HTML_GREY}{rest}{HTML_END}")
 
@@ -139,17 +143,20 @@ with tab2:
         if not reference.strip():
             st.warning("Please enter reference text")
         else:
-            stripped = strip_diacritics(reference)
+            # Lowercase reference to match strip_diacritics (which lowercases)
+            # so evaluation measures diacritic accuracy, not case
+            reference_lc = reference.lower()
+            stripped = strip_diacritics(reference_lc)
             restored = restorer.restore(stripped)
 
             # Calculate metrics
-            total_chars = min(len(stripped), len(restored), len(reference))
+            total_chars = min(len(stripped), len(restored), len(reference_lc))
             total_mutable = 0
             correct_mutable = 0
             total_correct = 0
 
             for i in range(total_chars):
-                s, r, ref = stripped[i], restored[i], reference[i]
+                s, r, ref = stripped[i], restored[i], reference_lc[i]
 
                 if r == ref:
                     total_correct += 1
@@ -163,7 +170,7 @@ with tab2:
             mutable_acc = correct_mutable / total_mutable if total_mutable > 0 else 1.0
 
             # Sentence-level accuracy
-            ref_sentences = [s.strip() for s in reference.split(".") if s.strip()]
+            ref_sentences = [s.strip() for s in reference_lc.split(".") if s.strip()]
             strip_sentences = [s.strip() for s in stripped.split(".") if s.strip()]
             sentences_correct = 0
             total_sentences = len(ref_sentences)
@@ -176,7 +183,7 @@ with tab2:
             sentence_acc = sentences_correct / total_sentences if total_sentences > 0 else 1.0
 
             st.subheader("Evaluation Results")
-            colored = colorize_changes(stripped, restored, reference)
+            colored = colorize_changes(stripped, restored, reference_lc)
             st.markdown(colored, unsafe_allow_html=True)
 
             st.markdown(
