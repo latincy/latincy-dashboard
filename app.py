@@ -23,5 +23,6 @@ st.markdown(
     - [Analyze morphology](morphology_demo) — lemma, case, gender, tense, and more
     - [Normalize U/V spelling](uv_normalizer_demo) with rule-based [latincy-uv](https://github.com/diyclassics/latincy-uv)
     - [Correct long-s OCR artifacts](long_s_demo) with [latincy-long-s](https://github.com/diyclassics/latincy-long-s)
+    - [Restore Greek diacritics](diacritics_demo) with [latincy-diacritics](https://github.com/diyclassics/latincy-diacritics)
 """
 )
