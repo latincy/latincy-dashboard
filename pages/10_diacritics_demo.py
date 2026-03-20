@@ -56,7 +56,7 @@ st.title("Greek Diacritics Restorer")
 st.markdown(
     "Restore polytonic diacritics to undiacriticized Ancient Greek text "
     "using a character-level [CANINE-S](https://huggingface.co/google/canine-s) transformer, "
-    "powered by [latincy-diacritics](https://github.com/diyclassics/latincy-diacritics)."
+    "powered by [latincy-diacritics v0.1.0](https://huggingface.co/latincy/latincy-diacritics)."
 )
 
 tab1, tab2, tab3 = st.tabs(["Restore", "Evaluate", "About"])
@@ -215,11 +215,10 @@ with tab3:
 
     ### The Diacritics Problem
 
-    Ancient Greek texts in their polytonic form use a rich system of diacritics:
-    **breathing marks** (smooth ψιλή, rough δασεία), **accents** (acute ὀξεία,
-    grave βαρεία, circumflex περισπωμένη), **iota subscript** (ὑπογεγραμμένη),
-    and **diaeresis** (διαλυτικά). Many digital Greek texts — especially those
-    from OCR, plain-text corpora, or keyboard input — lack these diacritics.
+    Ancient Greek in its polytonic form uses breathing marks, accents, iota
+    subscripts, and diaeresis. Some digital texts lack these diacritics —
+    whether stripped for NLP processing, stored in monotonic form, or
+    entered without a polytonic keyboard.
 
     This tool automatically restores polytonic diacritics using a trained
     character-level transformer.
@@ -249,5 +248,6 @@ with tab3:
 
     ### Source
 
-    [GitHub: latincy-diacritics](https://github.com/diyclassics/latincy-diacritics)
+    - **Model:** [latincy-diacritics v0.1.0](https://huggingface.co/latincy/latincy-diacritics) on Hugging Face
+    - **Code:** [latincy-diacritics](https://github.com/diyclassics/latincy-diacritics) on GitHub
     """)
