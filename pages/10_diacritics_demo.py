@@ -1,6 +1,6 @@
 import streamlit as st
 
-from latincy_diacritics import DiacriticRestorer, strip_diacritics, MUTABLE_CHARS, base_char
+from latincy_diacritics import DiacriticRestorer, normalize_greek, strip_diacritics, MUTABLE_CHARS, base_char
 
 st.set_page_config(page_title="Greek Diacritics Restorer Demo", layout="wide")
 st.sidebar.header("Greek Diacritics Restorer Demo")
@@ -83,7 +83,7 @@ with tab1:
         if not text.strip():
             st.warning("Please enter some text")
         else:
-            result = restorer.restore_detailed(text)
+            result = restorer.restore_detailed(normalize_greek(text))
             input_text = result["input"]
             output_text = result["output"]
             predictions = result["predictions"]
@@ -143,9 +143,9 @@ with tab2:
         if not reference.strip():
             st.warning("Please enter reference text")
         else:
-            # Lowercase reference to match strip_diacritics (which lowercases)
+            # Normalize and lowercase reference to match strip_diacritics
             # so evaluation measures diacritic accuracy, not case
-            reference_lc = reference.lower()
+            reference_lc = normalize_greek(reference).lower()
             stripped = strip_diacritics(reference_lc)
             restored = restorer.restore(stripped)
 
