@@ -68,9 +68,9 @@ with tab2:
 
     - **Architecture:** spaCy `senter` (token-level binary classifier)
     - **Accuracy:** 99.71% F1 on UD Latin test data
-    - **Training data:** Combined UD Latin treebanks (Perseus, PROIEL, ITTB, LLCT, UDante)
+    - **Training data:** Combined UD Latin treebanks (Perseus, PROIEL, ITTB, LLCT, UDante, CIRCSE) + LASLA
 
     ### Source
 
-    [GitHub: diyclassics/latincy](https://github.com/diyclassics/latincy)
+    [LatinCy on HuggingFace](https://huggingface.co/latincy)
     """)

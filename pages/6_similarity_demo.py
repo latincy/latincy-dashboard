@@ -189,7 +189,7 @@ with tab1:
             results.sort(key=lambda x: x[1], reverse=True)
             results = results[:n_results]
 
-            st.markdown(f"**Top {len(results)} words most similar to *{word}*:**")
+            st.markdown(f"**Top {len(results)} words most similar to *{word}* (in the DCC Core Vocabulary):**")
             for i, (w, score) in enumerate(results, 1):
                 st.text(f"{i:3d}. {w:<20s} {score:.4f}")
 
@@ -247,9 +247,14 @@ with tab3:
 
     ### Candidate List
 
-    "Find Similar Words" searches against a curated list of ~600 lemmas
-    from the DCC Core Latin Vocabulary. This is necessary because floret
-    vectors use hashing and don't maintain a full vocabulary index.
+    You can enter **any** Latin word as input — floret produces a vector
+    for it via subword hashing. The results, however, are drawn from a
+    curated list of ~600 lemmas from the
+    [DCC Core Latin Vocabulary](https://dcc.dickinson.edu/latin-core-list1).
+    Unlike traditional word vectors, floret maps subword n-grams to
+    shared hash buckets rather than storing a fixed vocabulary. This
+    means any word gets a vector, but there is no list of known words
+    to search through — hence the curated candidate list.
 
     ### Available Models
 
@@ -259,5 +264,5 @@ with tab3:
 
     ### Source
 
-    [GitHub: diyclassics/latincy](https://github.com/diyclassics/latincy)
+    [LatinCy on HuggingFace](https://huggingface.co/latincy)
     """)

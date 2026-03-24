@@ -12,7 +12,7 @@ license: mit
 
 # LatinCy Dashboard
 
-Streamlit dashboard for exploring features of the [LatinCy](https://huggingface.co/latincy) models (la_core_web_lg, la_core_web_md, la_core_web_sm v3.8.0).
+Streamlit dashboard for exploring features of the [LatinCy](https://huggingface.co/latincy) models (la_core_web_lg, la_core_web_md, la_core_web_sm v3.9.0).
 
 View dashboard [here](https://latincy.streamlit.app/)
 

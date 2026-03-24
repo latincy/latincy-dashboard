@@ -12,9 +12,9 @@ st.title("Latin Named Entity Recognition")
 st.markdown(
     """
 This demo highlights **named entities** in Latin text — people, places,
-groups, events, works, and dates — using LatinCy's NER component.
+and groups — using LatinCy's NER component.
 
-**Entity types:** PERSON, NORP, GPE, LOC, EVENT, WORK, DATE
+**Entity types:** PERSON, LOC, NORP
 """
 )
 
@@ -60,12 +60,8 @@ with tab2:
     | Label | Description | Examples |
     |-------|-------------|----------|
     | **PERSON** | Named individuals | *Cicero*, *Caesar*, *Medea* |
+    | **LOC** | Locations (cities, rivers, mountains, regions) | *Roma*, *Rhenus*, *Gallia* |
     | **NORP** | Nationalities, religious/political groups | *Belgae*, *Aquitani*, *Romani* |
-    | **GPE** | Geo-political entities (cities, provinces, states) | *Roma*, *Carthago*, *Athenae* |
-    | **LOC** | Non-GPE locations (rivers, mountains, regions) | *Rhenus*, *Alpes*, *Gallia* |
-    | **EVENT** | Named battles, wars, festivals | *Pharsalia*, *Saturnalia* |
-    | **WORK** | Titles of literary or artistic works | *Aeneis*, *Metamorphoses* |
-    | **DATE** | Temporal expressions | *Idibus Martiis*, *anno consulatus* |
 
     ### Training Data
 
@@ -95,20 +91,7 @@ with tab2:
     transformer encoder (trf), which improve the model's ability to
     disambiguate entities from common nouns and adjectives.
 
-    ### Interpreting Entity Annotations
-
-    Entities are shown as highlighted spans in the text. Each span is
-    labeled with its entity type. A few tips for interpretation:
-
-    - **Overlapping categories:** A word like *Romani* could be NORP
-      (the Roman people) or GPE (the Roman state), depending on context.
-      The model picks the most likely label, but ambiguous cases exist.
-    - **Boundary errors:** The model may occasionally include or exclude
-      a word at the edge of a multi-token entity. Check the full span.
-    - **Unknown entities:** Rare names not seen in training may be missed.
-      Larger models generally have better recall on uncommon entities.
-
     ### Source
 
-    [GitHub: diyclassics/latincy](https://github.com/diyclassics/latincy)
+    [LatinCy on HuggingFace](https://huggingface.co/latincy)
     """)

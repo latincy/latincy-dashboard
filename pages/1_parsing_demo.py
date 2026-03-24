@@ -207,5 +207,5 @@ with tab2:
 
     - [Universal Dependencies](https://universaldependencies.org/) — annotation guidelines and treebank data
     - [UD Latin treebanks](https://universaldependencies.org/la/index.html) — all Latin UD resources
-    - [GitHub: diyclassics/latincy](https://github.com/diyclassics/latincy) — LatinCy source and documentation
+    - [LatinCy on HuggingFace](https://huggingface.co/latincy) — models and documentation
     """)

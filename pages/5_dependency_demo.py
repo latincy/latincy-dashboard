@@ -91,7 +91,7 @@ with tab2:
     - Trees follow UD v2 annotation guidelines
     - The root of each sentence is the main predicate
     - Compact mode collapses the tree vertically for long sentences
-    - Trained on 5 Latin UD treebanks: Perseus, PROIEL, ITTB, LLCT, UDante
+    - Trained on 6 Latin UD treebanks (Perseus, PROIEL, ITTB, LLCT, UDante, CIRCSE) + LASLA
 
     ### Reference
 
