@@ -24,5 +24,7 @@ st.markdown(
     - [Normalize U/V spelling](uv_normalizer_demo) with rule-based [latincy-uv](https://github.com/diyclassics/latincy-uv)
     - [Correct long-s OCR artifacts](long_s_demo) with [latincy-long-s](https://github.com/diyclassics/latincy-long-s)
     - [Restore Greek diacritics](diacritics_demo) with [latincy-diacritics](https://github.com/diyclassics/latincy-diacritics)
+    - [Look up Latin words in Whitaker's Words](lexicon_lookup_demo) with [latincy-lexicon](https://github.com/latincy/latincy-lexicon)
+    - [Generate full inflectional paradigms](paradigm_demo) for any Latin token
 """
 )
