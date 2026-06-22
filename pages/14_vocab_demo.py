@@ -83,15 +83,12 @@ with tab1:
             with s1:
                 if st.button("Alphabetical", key="sort_alpha", use_container_width=True):
                     st.session_state["vocab_sort"] = "alpha"
-                    st.rerun()
             with s2:
                 if st.button("First Occurrence", key="sort_occ", use_container_width=True):
                     st.session_state["vocab_sort"] = "occurrence"
-                    st.rerun()
             with s3:
                 if st.button("Frequency", key="sort_freq", use_container_width=True):
                     st.session_state["vocab_sort"] = "freq"
-                    st.rerun()
 
             hide_dcc = st.checkbox(
                 "Hide DCC Core words",
