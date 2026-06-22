@@ -120,7 +120,10 @@ with tab1:
             lines = []
             for entry in visible:
                 in_dcc = is_dcc_core(to_u_form(entry.lemma))
-                hw = f"<strong>{entry.headword}</strong>"
+                hw_text = entry.headword
+                if hw_text and hw_text[0].isupper():
+                    hw_text = hw_text[0].lower() + hw_text[1:]
+                hw = f"<strong>{hw_text}</strong>"
                 pm = f" <em>{entry.pos_marker}</em>" if entry.pos_marker else ""
                 gloss = f", {entry.short_gloss}" if entry.short_gloss else ""
                 freq = f" <em>×{entry.frequency}</em>" if entry.frequency > 1 else ""
