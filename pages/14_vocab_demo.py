@@ -1,8 +1,10 @@
 import streamlit as st
 
-from vocabbuilder import VocabPipeline
+from lexicon_helpers import load_lexicon_pipeline
 from vocabbuilder.core.config import PipelineConfig
 from vocabbuilder.core.models import VocabList
+from vocabbuilder.data.gloss_provider import GlossProvider
+from vocabbuilder.processors.vocab_core import build_vocab_list
 
 st.set_page_config(page_title="Vocab Builder Demo", layout="wide")
 st.sidebar.header("Vocab Builder Demo")
@@ -25,13 +27,34 @@ DEFAULT_TEXT = (
     "tempestas enim magna mare turbabat. Perseus autem in sinu matris dormiebat."
 )
 
+
 @st.cache_resource(show_spinner="Loading vocabulary pipeline…")
-def load_pipeline() -> VocabPipeline:
-    config = PipelineConfig(spacy_model="la_core_web_lg")
-    return VocabPipeline(config)
+def load_resources():
+    # Use the shared lexicon pipeline so token._.lexicon is populated,
+    # giving us citation forms (principal parts, gen+gender, -a,-um).
+    nlp = load_lexicon_pipeline("la_core_web_lg")
+    config = PipelineConfig(spacy_model="la_core_web_lg", spacy_disable=[])
+    config.resolve_data_paths()
+    gloss_provider = GlossProvider(config.glosses_path) if config.glosses_path else None
+    return nlp, config, gloss_provider
 
 
-pipeline = load_pipeline()
+nlp, _config, _gloss_provider = load_resources()
+
+
+def process(text: str) -> VocabList:
+    doc = nlp(text)
+    vocab = build_vocab_list(doc, _config)
+    if _gloss_provider:
+        for entry in vocab:
+            result = _gloss_provider.lookup(entry.lemma, entry.pos, _config.max_glosses)
+            if result:
+                entry.glosses = result.glosses
+                entry.display_lemma = result.display_lemma
+            else:
+                entry.display_lemma = _gloss_provider.get_display_lemma(entry.lemma)
+    return vocab
+
 
 tab1, tab2 = st.tabs(["Vocab List", "About"])
 
@@ -49,14 +72,13 @@ with tab1:
 
     if run:
         with st.spinner("Processing…"):
-            vocab: VocabList = pipeline.process(text)
+            vocab: VocabList = process(text)
         st.session_state["vocab_list"] = vocab
         st.session_state["vocab_sort"] = "alpha"
 
     with col_vocab:
         if "vocab_list" in st.session_state:
             vocab: VocabList = st.session_state["vocab_list"]
-            current_sort = st.session_state.get("vocab_sort", "alpha")
 
             s1, s2, s3 = st.columns(3)
             with s1:
@@ -108,8 +130,10 @@ This demo uses **latincy-vocab** (`vocabbuilder.VocabPipeline`) to process a Lat
 passage end-to-end:
 
 1. **spaCy** tokenizes and annotates (lemma, POS, morphology)
-2. **latincy-lexicon** supplies Whitaker's Words glosses and display lemmas
-3. **latincy-words** attaches citation forms where available
+2. **latincy-lexicon** supplies Whitaker's Words glosses, display lemmas, and
+   citation forms (principal parts for verbs; nominative, genitive, and gender
+   for nouns; nominative with -a, -um endings for adjectives)
+3. **latincy-words** provides the underlying gloss data
 4. `VocabList` deduplicates by lemma+POS and exposes three orderings
 
 > **Note:** vocabulary entries are assembled from probabilistic LatinCy pipeline
