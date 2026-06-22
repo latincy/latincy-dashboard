@@ -130,8 +130,7 @@ passage end-to-end:
 2. **latincy-lexicon** supplies Whitaker's Words glosses, display lemmas, and
    citation forms (principal parts for verbs; nominative, genitive, and gender
    for nouns; nominative with -a, -um endings for adjectives)
-3. **latincy-words** provides the underlying gloss data
-4. `VocabList` deduplicates by lemma+POS and exposes three orderings
+3. `VocabList` deduplicates by lemma+POS and exposes three orderings
 
 > **Note:** vocabulary entries are assembled from probabilistic LatinCy pipeline
 > annotations and should be verified before use in publication or teaching.
