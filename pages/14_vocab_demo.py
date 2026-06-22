@@ -21,10 +21,7 @@ lemmatized, glossed, and sortable.
 DEFAULT_TEXT = (
     "Haec narrantur a poetis de Perseo. Perseus filius erat Iovis, maximi "
     "deorum; avus eius Acrisius appellabatur. Acrisius volebat Perseum nepotem "
-    "suum necare; nam propter oraculum puerum timebat. Comprehendit igitur "
-    "Perseum adhuc infantem, et cum matre in arca lignea inclusit. Tum arcam "
-    "ipsam in mare coniecit. Danae, Persei mater, magnopere territa est; "
-    "tempestas enim magna mare turbabat. Perseus autem in sinu matris dormiebat."
+    "suum necare; nam propter oraculum puerum timebat."
 )
 
 
