@@ -179,12 +179,12 @@ with tab2:
 
     ### Model Details
 
-    - **Model:** `la_core_web_lg` — LatinCy v3.9.0
+    - **Model:** `la_core_web_lg` — LatinCy v3.9.4
     - **Training data:** Harmonized annotations from 6 UD Latin treebanks
       (Perseus, PROIEL, ITTB, LLCT, UDante, CIRCSE) + LASLA
     - **Framework:** [spaCy](https://spacy.io/) v3
 
-    ### Accuracy (v3.9.0, lg model)
+    ### Accuracy (v3.9.4, lg model)
 
     | Component | Score |
     |-----------|-------|

@@ -26,5 +26,6 @@ st.markdown(
     - [Restore Greek diacritics](diacritics_demo) with [latincy-diacritics](https://github.com/diyclassics/latincy-diacritics)
     - [Look up Latin words in Whitaker's Words](lexicon_lookup_demo) with [latincy-lexicon](https://github.com/latincy/latincy-lexicon)
     - [Generate full inflectional paradigms](paradigm_demo) for any Latin token
+    - [Explore macron-based morphology signal](macron_morph_demo) *(experimental)* — how vowel-length marks supplement model predictions
 """
 )
