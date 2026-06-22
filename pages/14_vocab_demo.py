@@ -1,10 +1,12 @@
 import streamlit as st
 
+from dcc_helpers import is_dcc_core
 from lexicon_helpers import load_lexicon_pipeline
 from vocabbuilder.core.config import PipelineConfig
 from vocabbuilder.core.models import VocabList
 from vocabbuilder.data.gloss_provider import GlossProvider
 from vocabbuilder.processors.vocab_core import build_vocab_list
+from vocabbuilder.utils.normalization import to_u_form
 
 st.set_page_config(page_title="Vocab Builder Demo", layout="wide")
 st.sidebar.header("Vocab Builder Demo")
@@ -91,6 +93,13 @@ with tab1:
                     st.session_state["vocab_sort"] = "freq"
                     st.rerun()
 
+            hide_dcc = st.checkbox(
+                "Hide DCC Core words",
+                value=False,
+                key="hide_dcc",
+                help="Remove high-frequency words from the DCC Core Latin Vocabulary",
+            )
+
             sort_key = st.session_state.get("vocab_sort", "alpha")
             if sort_key == "alpha":
                 sorted_vocab = vocab.by_alpha()
@@ -100,20 +109,31 @@ with tab1:
                 sorted_vocab = vocab.by_frequency()
 
             visible = [e for e in sorted_vocab if e.headword and e.headword[0].isalpha()]
+            dcc_count = sum(1 for e in visible if is_dcc_core(to_u_form(e.lemma)))
+            new_count = len(visible) - dcc_count
+
+            if hide_dcc:
+                visible = [e for e in visible if not is_dcc_core(to_u_form(e.lemma))]
 
             st.caption(
-                f"{len(visible)} entries · assembled from probabilistic LatinCy "
-                "pipeline annotations — verify before use"
+                f"{len(visible)} entries shown · {new_count} new, {dcc_count} DCC core · "
+                "assembled from probabilistic LatinCy pipeline annotations — verify before use"
             )
 
             lines = []
             for entry in visible:
+                in_dcc = is_dcc_core(to_u_form(entry.lemma))
                 hw = f"<strong>{entry.headword}</strong>"
                 pm = f" <em>{entry.pos_marker}</em>" if entry.pos_marker else ""
                 gloss = f", {entry.short_gloss}" if entry.short_gloss else ""
                 freq = f" <em>×{entry.frequency}</em>" if entry.frequency > 1 else ""
+                dcc_tag = (
+                    " <span style='color:#09a3d5;font-size:0.75em'>dcc</span>"
+                    if in_dcc else ""
+                )
                 lines.append(
-                    f"<p style='margin:0 0 2px 0;line-height:1.4'>{hw}{pm}{gloss}{freq}</p>"
+                    f"<p style='margin:0 0 2px 0;line-height:1.4'>"
+                    f"{hw}{pm}{gloss}{freq}{dcc_tag}</p>"
                 )
 
             st.markdown("".join(lines), unsafe_allow_html=True)
@@ -131,6 +151,10 @@ passage end-to-end:
    citation forms (principal parts for verbs; nominative, genitive, and gender
    for nouns; nominative with -a, -um endings for adjectives)
 3. `VocabList` deduplicates by lemma+POS and exposes three orderings
+
+The **Hide DCC Core words** checkbox filters out the ~1,000 high-frequency lemmas
+from the [DCC Core Latin Vocabulary](https://dcc.dickinson.edu/vocab/core-vocabulary),
+leaving only words a student would need to look up.
 
 > **Note:** vocabulary entries are assembled from probabilistic LatinCy pipeline
 > annotations and should be verified before use in publication or teaching.
