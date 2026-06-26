@@ -179,22 +179,22 @@ with tab2:
 
     ### Model Details
 
-    - **Model:** `la_core_web_lg` — LatinCy v3.9.4
+    - **Model:** `la_core_web_lg` — LatinCy v3.9.5
     - **Training data:** Harmonized annotations from 6 UD Latin treebanks
       (Perseus, PROIEL, ITTB, LLCT, UDante, CIRCSE) + LASLA
     - **Framework:** [spaCy](https://spacy.io/) v3
 
-    ### Accuracy (v3.9.4, lg model)
+    ### Accuracy (v3.9.5, lg model)
 
     | Component | Score |
     |-----------|-------|
-    | **POS (UPOS)** | 96.5% |
-    | **Morphology** | 90.8% |
-    | **Lemma** | 94.2% |
-    | **Dependency UAS** | 80.8% |
-    | **Dependency LAS** | 75.3% |
-    | **Sentence segmentation** | 93.0% F1 |
-    | **NER** | 88.4% F1 |
+    | **POS (UPOS)** | 97.26% |
+    | **Morphology** | 90.37% |
+    | **Lemma** | 95.26% |
+    | **Dependency UAS** | 83.50% |
+    | **Dependency LAS** | 78.53% |
+    | **Sentence segmentation** | 92.64% F1 |
+    | **NER** | 87.46% F1 |
 
     Scores evaluated on held-out UD test set; NER on dev set.
 
