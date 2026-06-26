@@ -8,6 +8,7 @@ sdk_version: 1.45.1
 app_file: app.py
 pinned: false
 license: mit
+python_version: "3.12"
 ---
 
 # LatinCy Dashboard
